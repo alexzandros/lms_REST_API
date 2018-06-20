@@ -14,4 +14,19 @@ fun main(args: Array<String>) {
         response.type("application/json")
         App.listarUsuarios(1, 10)
     }
+
+    post("/usuarios"){
+        if (request.contentType() == "application/json"){
+            if (App.insertarUsuario(request.body()).isNullOrEmpty()){
+                response.status(201)
+                "ok"
+            }
+            else{
+                response.status(500)
+                "Error Interno del Servidor"
+            }
+        }
+        else
+            halt(415)
+    }
 }

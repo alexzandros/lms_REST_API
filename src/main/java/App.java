@@ -22,11 +22,15 @@ public class App {
         return mensaje;
     }
 
-    public static String otros(){
+
+    public static String insertarUsuario(String usuario){
+        StringBuilder sb = new StringBuilder();
         ZMQ.Context context = ZMQ.context(1);
         ZMQ.Socket socket = context.socket(ZMQ.REQ);
         socket.connect("tcp://localhost:6913");
-        socket.send("otros");
+        sb.append("insertar_usuario").append(" ");
+        sb.append(usuario);
+        socket.send(sb.toString());
         String mensaje = socket.recvStr();
         return mensaje;
     }
