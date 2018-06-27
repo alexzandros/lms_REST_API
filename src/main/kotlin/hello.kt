@@ -7,7 +7,15 @@ fun main(args: Array<String>) {
         val pagina = params(":pagina").toInt()        
         val numelem = params(":numelem").toInt()  
         response.type("application/json")
-        App.listarUsuarios(pagina, numelem)
+        val respuesta_backend = App.listarUsuarios(pagina, numelem)
+        println(respuesta_backend)
+        if (respuesta_backend.startsWith(""""Error """, true)){
+            response.status(500)
+        }
+        else{
+            response.status(200)
+        }
+        respuesta_backend
     }
 
     get("/listarUsuarios") {
