@@ -20,13 +20,35 @@ fun main(args: Array<String>) {
 
     get("/listarUsuarios") {
         response.type("application/json")
-        App.listarUsuarios(1, 10)
+        val respuesta_backend = App.listarUsuarios(1, 10)
+        if (respuesta_backend.startsWith(""""Error """, true)){
+            response.status(500)
+        }
+        else{
+            response.status(200)
+        }
+        respuesta_backend
     }
 
     post("/usuarios"){
         if (request.contentType() == "application/json"){
             if (App.insertarUsuario(request.body()).isNullOrEmpty()){
                 response.status(201)
+                "ok"
+            }
+            else{
+                response.status(500)
+                "Error Interno del Servidor"
+            }
+        }
+        else
+            halt(415)
+    }
+
+    post("/usuarios/login"){
+        if (request.contentType() == "application/json"){
+            if (App.loguearUsuario(request.body()).isNullOrEmpty()){
+                response.status(200)
                 "ok"
             }
             else{
