@@ -20,7 +20,7 @@ repositories {
 
 dependencies {
     compile 'com.google.guava:guava:20.0'
-    compile 'org.zeromq:jeromq:0.3.4'
+    compile 'org.zeromq:jeromq:0.4.3'
     compile 'com.sparkjava:spark-kotlin:1.0.0-alpha'
     testCompile 'junit:junit:4.12'
 }

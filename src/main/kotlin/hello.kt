@@ -10,24 +10,30 @@ fun main(args: Array<String>) {
         val respuesta_backend = App.listarUsuarios(pagina, numelem)
         println(respuesta_backend)
         if (respuesta_backend.startsWith(""""Error """, true)){
-            response.status(500)
+            status(500)
         }
         else{
-            response.status(200)
+            status(200)
         }
         respuesta_backend
     }
 
     get("/listarUsuarios") {
         response.type("application/json")
-        val respuesta_backend = App.listarUsuarios(1, 10)
-        if (respuesta_backend.startsWith(""""Error """, true)){
-            response.status(500)
+        try{
+            val respuesta_backend = App.listarUsuarios(1, 10)
+            if (respuesta_backend.startsWith(""""Error """, true)){
+                response.status(500)
+            }
+            else{
+                response.status(200)
+            }
+            respuesta_backend
         }
-        else{
-            response.status(200)
+        catch (ex : Exception){
+            status(500)
+            ex.toString()
         }
-        respuesta_backend
     }
 
     post("/usuarios"){
